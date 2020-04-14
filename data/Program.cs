@@ -13,25 +13,28 @@ namespace data
         [STAThreadAttribute]
         static void Main(string[] args)
         {
-            DateTime dataAtual;
+            DateTime dataAtual = DateTime.Now;
+            int qtdDias = int.Parse(args[0]);
+            String dataString;
 
-            if (args.Length > 1)
+            if (qtdDias == 0 & args.Length == 1){
+                Clipboard.SetText(dataAtual.ToString("dd/MM/yyyy") + ", CONSULTA SPC OK");
+            } else if (args.Length == 1)
             {
-                dataAtual = DateTime.Parse(args[1]);
-            }
-            else
+                dataString = dataAtual.AddDays(qtdDias).ToString("dd/MM/yyyy");
+                Console.WriteLine("Data inicial: " + dataAtual.ToString("dd/MM/yyyy") + " somando " + qtdDias + " dias = "+ dataString);
+                Clipboard.SetText(dataString);
+                Console.ReadLine();
+            } else if(args.Length > 1)
             {
-                dataAtual = DateTime.Now;
-            }
-            
-            DateTime dataResultado = dataAtual.AddDays(int.Parse(args[0]));
-            String dataString = dataResultado.ToString("dd/MM/yyyy");
-            //Console.WriteLine("Numero digitado foi: " + args[0]);
-            Console.WriteLine("Data inicial: " + dataAtual.ToString("dd/MM/yyyy")+" somando "+args[0]+" dias");
-            Clipboard.SetText(dataString);
-            Console.WriteLine("Data resultado: " + dataString);
-            Console.ReadLine();
-            
+                DateTime data1 = DateTime.Parse(args[1]).AddDays(qtdDias);
+                DateTime data2 = DateTime.Parse(args[2]);
+
+                dataString = (data1 - data2).ToString("ddd");
+                Console.WriteLine("A diferença entre " + data1.ToString("dd/MM/yyyy") + " e " + data2.ToString("dd/MM/yyyy") + " é "+ dataString);
+                Clipboard.SetText(dataString);
+                Console.ReadLine();
+            }                      
         }
     }
 }
